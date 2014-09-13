@@ -1,0 +1,43 @@
+{
+  "name": "broccoli-livingstyleguide",
+  "version": "0.1.0",
+  "description": "LivingStyleGuide integration for Broccoli",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:hagenburger/broccoli-livingstyleguide.git"
+  },
+  "keywords": [
+    "broccoli-plugin",
+    "livingstyleguide",
+    "living style guide",
+    "front-end style guide",
+    "style guide",
+    "sass",
+    "scss",
+    "css"
+  ],
+  "author": "Nico Hagenburger <nico@hagenburger.net> (http://www.hagenburger.net/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hagenburger/broccoli-livingstyleguide/issues"
+  },
+  "homepage": "http://livingstyleguide.org",
+  "dependencies": {
+    "mkdirp": "^0.3.5",
+    "include-path-searcher": "^0.1.0",
+    "promise-map-series": "^0.2.0",
+    "include-path-searcher": "^0.1.0",
+    "quick-temp": "^0.1.0",
+    "promise-map-series": "^0.2.0",
+    "win-spawn": "^2.0.0",
+    "rsvp": "^3.0.6"
+  },
+  "devDependencies": {
+    "broccoli": "^0.12.3",
+    "broccoli-cli": "0.0.1",
+    "mocha": "*",
+    "rimraf": "^2.2.6"
+  }
+}
