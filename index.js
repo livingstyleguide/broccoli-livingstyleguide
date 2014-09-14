@@ -16,7 +16,8 @@ function LivingStyleGuideCompiler(sourceTrees, inputFile, outputFile, options) {
   this.sourceTrees = sourceTrees;
   this.inputFile = inputFile;
   this.outputFile = outputFile;
-  options = options || {};
+  this.options = options || {};
+  this.options.command = this.options.command || 'bundle exec livingstyleguide compile %input %output'
 }
 
 LivingStyleGuideCompiler.prototype.read = function(readTree) {
@@ -30,8 +31,11 @@ LivingStyleGuideCompiler.prototype.read = function(readTree) {
     .then(function (includePaths) {
       return new Promise(function(resolve, reject) {
         var srcFile = includePathSearcher.findFileSync(self.inputFile, includePaths);
-        var exec = ['bundle', 'exec', 'livingstyleguide', 'compile', srcFile, destFile];
-        console.log(exec.join(' '))
+        var command = self.options.command;
+        command = command.replace(/%input/, srcFile);
+        command = command.replace(/%output/, destFile);
+        console.log(command)
+        var exec = command.split(' ');
         var cmd = exec.shift();
         var cp = spawn(cmd, exec);
 
