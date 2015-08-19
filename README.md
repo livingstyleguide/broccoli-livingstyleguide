@@ -46,11 +46,24 @@ _**Warning:** this is in early alpha. I’m neither a NPM nor a [Broccoli](https
     var LivingStyleGuide = require('broccoli-livingstyleguide');
     var lsg = LivingStyleGuide(['app'], 'styles/styleguide.lsg', 'assets/styleguide.html');
     module.exports = lsg;
-    // For Ember CLI use this instead:
-    // module.exports = mergeTrees([app.toTree(), lsg]);
     ```
+    
+    For ember-cli, you have to manually install broccoli-merge-trees: `npm install broccoli-merge-trees --save-dev` and change your ember-cli-build.js as follows:
 
+    ``` javascript
+    var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+    var mergeTrees = require('broccoli-merge-trees');
+    
+    var LivingStyleGuide = require('broccoli-livingstyleguide');
+    var lsg = LivingStyleGuide(['app'], 'styles/styleguide.lsg', 'assets/styleguide.html');
+    
+    module.exports = function (defaults) {
+        var app = new EmberApp(defaults, { });
 
+        return mergeTrees([app.toTree(), lsg]);
+    };
+    ```
+    
 2.  Create a file _app/styles/styleguide.lsg_ containing:
     ``` yaml
     source: 'app.scss'
