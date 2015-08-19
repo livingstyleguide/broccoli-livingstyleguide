@@ -14,77 +14,81 @@ _**Warning:** this is in early alpha. I’m neither a NPM nor a [Broccoli](https
 
 ## Usage
 
-1.  Setup:
+### 1. Setup
 
-    Make sure [Ruby is installed](https://www.ruby-lang.org/en/downloads/) (on Mac OS Ruby is installed by default) and create a file named _[Gemfile](http://bundler.io/#getting-started)_ in your project’s path:
+Make sure [Ruby is installed](https://www.ruby-lang.org/en/downloads/) (on Mac OS Ruby is installed by default) and create a file named _[Gemfile](http://bundler.io/#getting-started)_ in your project’s path:
 
-    ``` ruby
-    source 'https://rubygems.org'
-    gem 'livingstyleguide'
+``` ruby
+source 'https://rubygems.org'
+gem 'livingstyleguide'
+```
+
+Add to the plugin to your `dependencies` in your _package.json_:
+
+``` json
+{
+  "dependencies": {
+    "broccoli-livingstyleguide": "^0.1.0"
+  }
+}
+```
+
+Install dependencies via command line:
+
+```
+bundle
+npm install
+```
+
+Assuming you have a stylesheet called _app/styles/app.scss_ (as Ember CLI does) add this your _Brocfile.js_:
+
+``` javascript
+var LivingStyleGuide = require('broccoli-livingstyleguide');
+var lsg = LivingStyleGuide(['app'], 'styles/styleguide.lsg', 'assets/styleguide.html');
+module.exports = lsg;
+```
+
+
+#### Ember CLI
+
+For _ember-cli,_ you have to manually install _broccoli-merge-trees:_ `npm install broccoli-merge-trees --save-dev` and change your ember-cli-build.js as follows:
+
+``` javascript
+var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var mergeTrees = require('broccoli-merge-trees');
+
+var LivingStyleGuide = require('broccoli-livingstyleguide');
+var lsg = LivingStyleGuide(['app'], 'styles/styleguide.lsg', 'assets/styleguide.html');
+
+module.exports = function (defaults) {
+    var app = new EmberApp(defaults, { });
+
+    return mergeTrees([app.toTree(), lsg]);
+};
+```
+
+### 2. Create a file _app/styles/styleguide.lsg_ containing
+
+``` yaml
+source: 'app.scss'
+title: 'My Living Style Guide'
+```
+
+### 3. Write documentation for each module *app/styles/partials/_buttons.md* (to describe *_buttons.scss* in the same folder)
+
+    Buttons
+    =======
+
+    ```
+    <button class="button">Example button</button>
     ```
 
-    Add to the plugin to your `dependencies` in your _package.json_:
-
-    ``` json
-    {
-      "dependencies": {
-        "broccoli-livingstyleguide": "^0.1.0"
-      }
-    }
+    ```
+    <button class="button -primary">Example button</button>
     ```
 
-    Install dependencies via command line:
 
-    ```
-    bundle
-    npm install
-    ```
-
-    Assuming you have a stylesheet called _app/styles/app.scss_ (as Ember CLI does) add this your _Brocfile.js_:
-
-    ``` javascript
-    var LivingStyleGuide = require('broccoli-livingstyleguide');
-    var lsg = LivingStyleGuide(['app'], 'styles/styleguide.lsg', 'assets/styleguide.html');
-    module.exports = lsg;
-    ```
-    
-    For ember-cli, you have to manually install broccoli-merge-trees: `npm install broccoli-merge-trees --save-dev` and change your ember-cli-build.js as follows:
-
-    ``` javascript
-    var EmberApp = require('ember-cli/lib/broccoli/ember-app');
-    var mergeTrees = require('broccoli-merge-trees');
-    
-    var LivingStyleGuide = require('broccoli-livingstyleguide');
-    var lsg = LivingStyleGuide(['app'], 'styles/styleguide.lsg', 'assets/styleguide.html');
-    
-    module.exports = function (defaults) {
-        var app = new EmberApp(defaults, { });
-
-        return mergeTrees([app.toTree(), lsg]);
-    };
-    ```
-    
-2.  Create a file _app/styles/styleguide.lsg_ containing:
-    ``` yaml
-    source: 'app.scss'
-    title: 'My Living Style Guide'
-    ```
-
-3.  Write documentation for each module *app/styles/partials/_buttons.md* (to describe *_buttons.scss* in the same folder):
-
-        Buttons
-        =======
-
-        ```
-        <button class="button">Example button</button>
-        ```
-
-        ```
-        <button class="button -primary">Example button</button>
-        ```
-
-4.  Open the generated _dist/assets/styleguide.html_.
-
+### 4. Open the generated _dist/assets/styleguide.html_
 
 Make sure to check out the [documentation for writing examples](https://github.com/hagenburger/livingstyleguide#writing-examples) and learn how to display colors from variables, use template languages, and helper functions.
 
@@ -106,7 +110,7 @@ Make sure to check out the [documentation for writing examples](https://github.c
 
 ## Copyright
 
-Copyright 2014 [Nico Hagenburger](http://www.hagenburger.net).
+Copyright 2014—2015 [Nico Hagenburger](http://www.hagenburger.net).
 See [MIT-LICENSE.md](MIT-LICENSE.md) for details.
 Get in touch with [@hagenburger](http://twitter.com/hagenburger) on Twitter or [open an issue](https://github.com/hagenburger/livingstyleguide/issues/new).
 
